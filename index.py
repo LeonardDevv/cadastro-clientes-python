@@ -1,9 +1,12 @@
+import json
+
 """
 cadastro-clientes-python
 """
 
 clientes = []
 id_atual = 1
+index = 1
 
 def adicionarCliente():
 	global id_atual
@@ -25,7 +28,7 @@ def adicionarCliente():
 def listarClientes():
 	print(f"{'=' * 30}\nLISTA DE CLIENTES CADASTRADOS\n{'=' * 30}")
 	for cliente in clientes:
-		print(cliente)
+		print(f"Cliente {cliente['Id']}: \nNome: {cliente['Nome']} \nIdade: {cliente['Idade']} \nE-mail: {cliente['E-mail']} \n{'-' * 10}")
 		
 def atualizarCliente():
 	id = int(input("Informe o número do cliente a ser atualizado: "))
@@ -54,7 +57,7 @@ def deletarCliente():
 def iniciar():
 	
 	while True:
-		inicio = int(input(f"Escolha uma opção abaixo: \n\n[ 1 ] - Adicionar cliente \n[ 2 ] - Listar clientes \n[ 3 ] - Atualizar dados do cliente \n[ 4 ] - Deletar cliente \n\n"))
+		inicio = int(input(f"Escolha uma opção abaixo: \n\n[ 1 ] - Adicionar cliente \n[ 2 ] - Listar clientes \n[ 3 ] - Atualizar dados do cliente \n[ 4 ] - Deletar cliente \n[ 5 ] - Sair\n\n"))
 		
 		if inicio == 1:
 			adicionarCliente()
@@ -64,6 +67,19 @@ def iniciar():
 			atualizarCliente()
 		elif inicio == 4:
 			deletarCliente()
+		elif inicio == 5:
+			print("Saindo...")
+			break
 
 
 iniciar()
+
+
+
+
+try:
+    with open('clientes.json', 'w', encoding='utf-8') as f:
+        json.dump(clientes, f, ensure_ascii=False, indent=4)
+    print("Dados salvos com sucesso em clientes.json")
+except Exception as e:
+    print(f"Ocorreu um erro ao salvar os dados: {e}")
